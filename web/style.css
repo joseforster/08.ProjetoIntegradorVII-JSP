@@ -1,0 +1,154 @@
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+#body-login {
+    align-items: center;
+    text-align: center;
+}
+
+.div-login{
+    top: 10%;
+    background-color: cadetblue;
+    width: 30%;
+    height: 80%;
+    border-radius: 2%;
+    position: relative; 
+    text-align: center;
+}
+
+#div-header{
+    height: 20%;
+}
+
+#div-table{
+    height: 70%;
+    overflow-y: scroll;
+}
+
+.div-menu{
+    position: relative;
+    width: 95%;
+    margin: 1%;
+    background-color: cadetblue;
+    border-radius: 10px;
+    color: white;
+}
+
+
+h1{
+    color: white;
+    text-align: center;
+}
+
+.form-login{
+    margin: auto;
+    text-align: center;
+}
+
+.menu{
+    width: 40%;
+    height: 40%;
+    background-color: cadetblue;
+    text-align: center;
+    margin-top: 5%;
+    border-radius: 2%;
+}
+
+.lista-item{
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.a-white{
+    text-decoration: none;
+    color: white;
+}
+
+
+input, h2{
+    margin: 0.5% 0.5% 0.5% 1%;
+}
+
+table{
+    border: 1px;
+    width: 70%;
+    background-color: cadetblue;
+    color: white;
+}
+
+td{
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr{
+    height: 30px;
+}
+
+.botao{
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+    left: 50%;
+    margin-right: 20%;
+    top: 40%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color:white;
+}
+
+.botao-container{
+    position: relative;
+    float: right;
+    height: 100%;
+    width: 20%;
+}
+
+.botao-login{
+    display: inline-block;
+    margin: 3%;
+    width: 80%;
+    padding: 3%;
+}
+
+#btn-login{
+    position: absolute;
+    width: 30%;
+    bottom: 4%;
+    right: 4%;
+}
+
+.span{
+    position: absolute;
+    width: fit-content;
+    font-size: x-large;
+    color: white;
+    font-weight: bold;
+}
+
+#span-username{
+    float: left;
+    top: 40%;
+    margin-left: 2%;
+}
+
+#span-nome-projeto, #span-cadastro-usuario{
+    margin: 0 auto;
+    position: relative;
+    top:40%;
+}
+
+.invisible{
+    display: none;
+}
