@@ -140,12 +140,25 @@ public class UsuarioDAO {
         try{
             Statement st = ConexaoBD.getInstance().getConnection().createStatement(); 
             
+            String sql;
+            
             if(model.getId() == 0){
                 
-              
+              sql = "insert into projeto_integrador_vii.usuario values (default, '"
+                      + model.getUsername() + "',"
+                      + " md5('"+model.getPassword()+"'), "
+                      + "'" + model.getAdministrador() + "')";
+            }else{
+                sql = "update projeto_integrador_vii.usuario "+
+                        "set username = '"+model.getUsername()+"', "
+                        + "administrador = '"+model.getAdministrador()+"' "
+                        + "where id = " + model.getId();
             }
             
+            st.executeUpdate(sql);
+            
             return true;
+            
         }catch(Exception e){
         
             System.out.println("Erro ao dar save no usuário: "+ e);

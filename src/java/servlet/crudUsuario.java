@@ -72,7 +72,7 @@ public class crudUsuario extends HttpServlet {
             encaminharPagina("cadastroUsuario.jsp?usuarioId="+userId);
         
         
-        } else if (parametro.equals("deletePessoa")) {
+        } else if (parametro.equals("deleteUsuario")) {
             
            int id = Integer.parseInt(request.getParameter("id"));
 
@@ -105,7 +105,8 @@ public class crudUsuario extends HttpServlet {
         resposta = response;
 
         String parametro = request.getParameter("param");
-
+        
+        int userId = Integer.parseInt(request.getParameter("userId"));
         
         if (parametro.equals("cadUsuario")) {
             
@@ -117,17 +118,23 @@ public class crudUsuario extends HttpServlet {
             UsuarioModel model = new UsuarioModel();
             model.setId(id);
             model.setUsername(username);
-            model.setPassword("senha");
+            model.setPassword(senha);
             
-            // TODO setar administrador
-            
-            if (new UsuarioDAO().save(model)) {
-                
-                encaminharPagina("sucesso.jsp");
-            } else {
-                
-                encaminharPagina("erroCadastroPessoa.jsp");
+            if(administrador == null){
+                model.setAdministrador("N");
+            }else{
+                model.setAdministrador("S");
             }
+            
+            if (new UsuarioDAO().save(model)){
+               
+               requisicao.setAttribute("success", "true");
+               
+           } else {
+               requisicao.setAttribute("success", "false");
+           }
+           
+           this.encaminharPagina("cadastroUsuario.jsp?usuarioId="+userId);
         }
     }
 

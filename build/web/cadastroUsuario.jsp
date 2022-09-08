@@ -22,8 +22,9 @@
                 model = new UsuarioModel();
                 model.setId(0);
                 model.setUsername("");
-                model.setPassword("");
                 model.setAdministrador("");
+            }else{
+                model.setPassword("");
             }
             
         %>
@@ -43,9 +44,13 @@
                     <input type="hidden" name="id" value="<%= model.getId()%>"><br>
 
                     <input type="text" name="nome"  placeholder="Digite o nome..." value="<%= model.getUsername()%>" required=""><br>
-                    
-                    <input type="password" name="senha"  placeholder="Digite o senha..." value="" required=""><br>
-                    
+                    <%
+                        if(model.getId() == 0){
+                    %>
+                    <input type="password" name="senha"  placeholder="Digite o senha..." value=""><br>
+                    <% 
+                        }
+                    %>
                     <label id="label-checkbox" for="checkbox-administrador">Administrador</label>
                     
                     <input id="checkbox-administrador" type="checkbox" name="administrador" value="adm" 
