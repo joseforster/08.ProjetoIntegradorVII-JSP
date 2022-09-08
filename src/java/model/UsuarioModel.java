@@ -53,4 +53,13 @@ public class UsuarioModel {
     public void setAdministrador(String administrador) {
         this.administrador = administrador;
     }
+    
+    public String getAdministradorChecked (){
+        
+        if(this.administrador == "S"){
+            return "checked";
+        }
+        
+        return "";
+    }
 }

@@ -4,7 +4,6 @@
  */
 package servlet;
 
-import dao.ProjetoDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,14 +12,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.ProjetoModel;
 import model.UsuarioModel;
 
 /**
  *
  * @author forster
  */
-public class crudProjeto extends HttpServlet {
+public class crudUsuario extends HttpServlet {
 
     HttpServletRequest requisicao;
     HttpServletResponse resposta;
@@ -33,10 +31,10 @@ public class crudProjeto extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet crudProjeto</title>");            
+            out.println("<title>Servlet crudUsuario</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet crudProjeto at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet crudUsuario at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,7 +52,41 @@ public class crudProjeto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        requisicao = request;
+        resposta = response; 
+        
+                
+        String parametro = request.getParameter("param");
+        
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        
+        
+        if (parametro.equals("updateUsuario")) {
+            
+            int id = Integer.parseInt(requisicao.getParameter("id"));
+            
+            UsuarioModel model = new UsuarioDAO().getById(id);
+            
+            requisicao.setAttribute("usuario", model);
+            
+            encaminharPagina("cadastroUsuario.jsp?usuarioId="+userId);
+        
+        
+        } else if (parametro.equals("deletePessoa")) {
+            
+           int id = Integer.parseInt(request.getParameter("id"));
+
+           if (new UsuarioDAO().destroy(id)) {
+               
+               requisicao.setAttribute("success", "true");
+               
+           } else {
+               requisicao.setAttribute("success", "false");
+           }
+           
+           this.encaminharPagina("cadastroUsuario.jsp?usuarioId="+userId);
+                   
+        }
     }
 
     /**
@@ -68,42 +100,34 @@ public class crudProjeto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+                
         requisicao = request; 
         resposta = response;
 
         String parametro = request.getParameter("param");
 
         
-        if (parametro.equals("create")) {
+        if (parametro.equals("cadUsuario")) {
             
-            String descricao = requisicao.getParameter("descricao");
-            String usuarioSenha = requisicao.getParameter("usuarioSenha");
-            String usuarioNome = requisicao.getParameter("usuarioNome");
+            int id = Integer.parseInt(requisicao.getParameter("id"));
+            String username = requisicao.getParameter("nome");
+            String administrador = requisicao.getParameter("administrador");
+            String senha = requisicao.getParameter("senha");
+             
+            UsuarioModel model = new UsuarioModel();
+            model.setId(id);
+            model.setUsername(username);
+            model.setPassword("senha");
             
-            UsuarioModel usuarioModel = new UsuarioModel();
-            usuarioModel.setUsername(usuarioNome);
-            usuarioModel.setPassword(usuarioSenha);
+            // TODO setar administrador
             
-            UsuarioModel usuarioBDModel = new UsuarioDAO().getUsuario(usuarioModel);
-            
-            ProjetoModel model = new ProjetoModel();
-            model.setDescricao(descricao);
-            model.setUsuario_criacao(usuarioBDModel);
-            
-            requisicao.setAttribute("usuario", usuarioBDModel);
-            
-            if (new ProjetoDAO().create(model)) {
+            if (new UsuarioDAO().save(model)) {
                 
-                requisicao.setAttribute("success", "true");
-                
+                encaminharPagina("sucesso.jsp");
             } else {
                 
-                requisicao.setAttribute("success", "false");
-                
+                encaminharPagina("erroCadastroPessoa.jsp");
             }
-            
-            encaminharPagina("menu.jsp");
         }
     }
 

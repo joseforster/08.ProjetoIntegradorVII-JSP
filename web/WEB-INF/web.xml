@@ -8,6 +8,10 @@
         <servlet-name>crudProjeto</servlet-name>
         <servlet-class>servlet.crudProjeto</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>crudUsuario</servlet-name>
+        <servlet-class>servlet.crudUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>autenticacao</servlet-name>
         <url-pattern>/autenticacao</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>crudProjeto</servlet-name>
         <url-pattern>/crudProjeto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>crudUsuario</servlet-name>
+        <url-pattern>/crudUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

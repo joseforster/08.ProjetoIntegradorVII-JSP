@@ -1,3 +1,4 @@
+<%@page import="dao.UsuarioDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.ProjetoModel"%>
 <%@page import="dao.ProjetoDAO"%>
@@ -12,9 +13,22 @@
     </head>
     <body>
         <%
-            UsuarioModel model = (UsuarioModel) request.getAttribute("usuario");
+            String usuarioId = request.getParameter("usuarioId");
+            
+            UsuarioModel model = new UsuarioModel();
+            
+            if(usuarioId == null){
+                
+                model = (UsuarioModel) request.getAttribute("usuario");
+                
+            }else{
+            
+                int id = Integer.parseInt(usuarioId);
+                
+                model = new UsuarioDAO().getById(id);
+            }
+            
         %>
-
         <div id="div-header" class="div-menu">
             <span class="span" id="span-username">Olá, <%= model.getUsername()%> </span>
 
@@ -23,7 +37,7 @@
                     if (model.getAdministrador().equals("S")) 
                     {
                 %>
-                <a href="cadastroUsuario.jsp" class="botao">Adicionar usuário</a>
+                <a href="cadastroUsuario.jsp?usuarioId=<%= model.getId()%>" class="botao">Adicionar usuário</a>
                 <%
                     }
                 %>
@@ -71,7 +85,13 @@
                         <button><a href="/ProjetoIntegradorVII/crudProjeto?param=gerarRelatorio&id=<%= lista.get(i).getId() %>">Gerar relatório</a></button>
                     </td>
                     <td>
+                        <% if(model.getAdministrador().equals("S"))
+                            {
+                        %>
                         <button><a href="/ProjetoIntegradorVII/crudProjeto?param=destroy&id=<%= lista.get(i).getId() %>">Excluir</a></button>
+                        <% 
+                            }
+                        %>
                     </td>
                 </tr>
             <%

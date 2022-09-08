@@ -7,6 +7,7 @@ package dao;
 import apoio.ConexaoBD;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import model.UsuarioModel;
 
 /**
@@ -14,6 +15,7 @@ import model.UsuarioModel;
  * @author forster
  */
 public class UsuarioDAO {
+    
     public UsuarioModel getUsuario(UsuarioModel model){
         try{
         
@@ -52,4 +54,105 @@ public class UsuarioDAO {
             return null;
         }
     }
+    
+    public UsuarioModel getById(int usuarioId){
+        
+        UsuarioModel model = new UsuarioModel();
+        
+        try{
+
+               Statement st = ConexaoBD.getInstance().getConnection().createStatement();     
+
+               String sql = "select * from projeto_integrador_vii.usuario "
+                       + "where id = " + usuarioId;
+
+               System.out.println(sql);
+
+               ResultSet result = st.executeQuery(sql);
+
+               while(result.next()){
+
+                   model.setId(result.getInt("id"));
+                   model.setUsername(result.getString("username"));
+                   model.setAdministrador(result.getString("administrador"));
+               }
+
+           }catch(Exception e){
+
+               System.out.println("Erro ao buscar usuário pelo id: " + e);
+
+           }
+     
+        return model;
+    
+    }
+    
+    public ArrayList<UsuarioModel> getListaUsuario(){
+    
+        ArrayList<UsuarioModel> lista = new ArrayList<>();
+        
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();  
+            
+            String sql = "select * from projeto_integrador_vii.usuario order by id";
+            
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                UsuarioModel model = new UsuarioModel();
+                
+                model.setId(rs.getInt("id"));
+                model.setUsername(rs.getString("username"));
+                model.setAdministrador(rs.getString("administrador"));
+                
+                lista.add(model);
+            }
+                    
+        }catch(Exception e){
+            System.out.println("Erro ao buscar todos os usuários: " + e);
+        }
+        
+        return lista;
+        
+    }
+    
+    public boolean destroy(int usuarioId){
+        
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement(); 
+            
+            String sql = "delete from projeto_integrador_vii.usuario where id = " + usuarioId;
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            
+            System.out.println("Erro ao excluir usuário: "+e);
+            
+            return false;
+        }
+    }
+    
+    public boolean save(UsuarioModel model){
+    
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement(); 
+            
+            if(model.getId() == 0){
+                
+              
+            }
+            
+            return true;
+        }catch(Exception e){
+        
+            System.out.println("Erro ao dar save no usuário: "+ e);
+            
+            return false;
+        }
+    }
+    
+    
 }

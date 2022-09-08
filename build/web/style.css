@@ -25,6 +25,7 @@ body{
 
 #div-header{
     height: 20%;
+ 
 }
 
 #div-table{
@@ -76,9 +77,10 @@ a{
 }
 
 
-input, h2{
+input, h2, label{
     margin: 0.5% 0.5% 0.5% 1%;
 }
+
 
 table{
     border: 1px;
@@ -90,6 +92,7 @@ table{
 td{
     text-align: center;
     vertical-align: middle;
+    color: white;
 }
 
 tr{
