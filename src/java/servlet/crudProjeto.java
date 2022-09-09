@@ -54,7 +54,31 @@ public class crudProjeto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        requisicao = request; 
+        resposta = response;
+
+        String parametro = requisicao.getParameter("param");
+        
+        int userId = Integer.parseInt(requisicao.getParameter("userId"));
+        
+        if(parametro.equals("destroy")){
+            
+            int idProjeto = Integer.parseInt(requisicao.getParameter("id"));
+            
+            if(new ProjetoDAO().destroy(idProjeto)) {
+                
+                requisicao.setAttribute("success", "true");
+                
+            } else {
+                
+                requisicao.setAttribute("success", "false");
+                
+            }
+            
+            this.encaminharPagina("menu.jsp?usuarioId="+userId);
+            
+        }
+
     }
 
     /**
@@ -78,20 +102,16 @@ public class crudProjeto extends HttpServlet {
         if (parametro.equals("create")) {
             
             String descricao = requisicao.getParameter("descricao");
-            String usuarioSenha = requisicao.getParameter("usuarioSenha");
-            String usuarioNome = requisicao.getParameter("usuarioNome");
+            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
             
-            UsuarioModel usuarioModel = new UsuarioModel();
-            usuarioModel.setUsername(usuarioNome);
-            usuarioModel.setPassword(usuarioSenha);
             
-            UsuarioModel usuarioBDModel = new UsuarioDAO().getUsuario(usuarioModel);
+            UsuarioModel usuarioModel = new UsuarioDAO().getById(usuarioId);
             
             ProjetoModel model = new ProjetoModel();
             model.setDescricao(descricao);
-            model.setUsuario_criacao(usuarioBDModel);
+            model.setUsuario_criacao(usuarioModel);
             
-            requisicao.setAttribute("usuario", usuarioBDModel);
+            requisicao.setAttribute("usuario", usuarioModel);
             
             if (new ProjetoDAO().create(model)) {
                 

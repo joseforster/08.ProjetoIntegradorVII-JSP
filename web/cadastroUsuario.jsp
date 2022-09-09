@@ -33,7 +33,7 @@
                 <span class="span" id="span-username">Cadastro de usuário</span>
                 <br/>
                 <div class="botao-container">
-                    <a href="menu.jsp?usuarioId=<%= usuarioId%>" class="botao" id="a-sair">Sair</a>
+                    <a href="menu.jsp?usuarioId=<%= usuarioId%>" class="botao" id="a-sair">Voltar</a>
                 </div>
             </div>
                 
@@ -77,6 +77,7 @@
             %>
 
             <div class="div-menu">
+                 
                 <table>
                     <tr>
                         <th>Id</th>

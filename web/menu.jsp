@@ -53,8 +53,7 @@
             %>
             <form method="post" action="/ProjetoIntegradorVII/crudProjeto?param=create">
                     <input type="text" name="descricao" placeholder="Digite o nome do projeto..." maxlength="100" required>
-                    <input type="hidden" name="usuarioSenha" value="<%= model.getPassword()%>">
-                    <input type="hidden" name="usuarioNome" value="<%= model.getUsername() %>">
+                    <input type="hidden" name="usuarioId" value="<%= model.getId()%>">
                     <input type="submit" value="Adicionar novo projeto">
                     <input type="reset" value="Cancelar">
             </form>
@@ -88,7 +87,7 @@
                         <% if(model.getAdministrador().equals("S"))
                             {
                         %>
-                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=destroy&id=<%= lista.get(i).getId() %>">Excluir</a></button>
+                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=destroy&id=<%= lista.get(i).getId() %>&userId=<%= model.getId() %>">Excluir</a></button>
                         <% 
                             }
                         %>
