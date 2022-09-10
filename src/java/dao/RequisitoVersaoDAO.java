@@ -80,4 +80,8 @@ public class RequisitoVersaoDAO implements IDAO<RequisitoVersaoModel> {
         
     }
     
+    public boolean createNovaVersao(RequisitoVersaoModel model){
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
 }

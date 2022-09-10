@@ -39,7 +39,7 @@
                 
             <div class="div-menu">
                 
-                <form method="post" action="/ProjetoIntegradorVII/crudUsuario?param=cadUsuario&userId=<%= usuarioModel.getId() %>">
+                <form method="post" action="/ProjetoIntegradorVII/crudUsuario?param=cadUsuario&usuarioId=<%= usuarioModel.getId() %>">
 
                     <input type="hidden" name="id" value="<%= model.getId()%>"><br>
 
@@ -92,8 +92,8 @@
                         <td><%= lista.get(i).getUsername()%></td>
                         <td><%= lista.get(i).getAdministrador()%></td>
                         <td>
-                            <a class="lista-item" href="/ProjetoIntegradorVII/crudUsuario?param=updateUsuario&id=<%= lista.get(i).getId()%>&userId=<%= usuarioModel.getId() %>">Editar</a>&nbsp;
-                            <a class="lista-item" href="/ProjetoIntegradorVII/crudUsuario?param=deleteUsuario&id=<%= lista.get(i).getId()%>&userId=<%= usuarioModel.getId() %>">Excluir</a>
+                            <button><a href="/ProjetoIntegradorVII/crudUsuario?param=updateUsuario&id=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioModel.getId() %>">Editar</a></button>&nbsp;
+                            <button><a href="/ProjetoIntegradorVII/crudUsuario?param=deleteUsuario&id=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioModel.getId() %>">Excluir</a></button>
                         </td>
                     </tr>
                     <% 

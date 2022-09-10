@@ -4,8 +4,7 @@
  */
 package servlet;
 
-import dao.ProjetoDAO;
-import dao.UsuarioDAO;
+import dao.RequisitoVersaoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -14,13 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.ProjetoModel;
-import model.UsuarioModel;
+import model.RequisitoVersaoModel;
 
 /**
  *
  * @author forster
  */
-public class crudProjeto extends HttpServlet {
+public class crudRequisito extends HttpServlet {
 
     HttpServletRequest requisicao;
     HttpServletResponse resposta;
@@ -33,10 +32,10 @@ public class crudProjeto extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet crudProjeto</title>");            
+            out.println("<title>Servlet crudRequisito</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet crudProjeto at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet crudRequisito at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,46 +54,50 @@ public class crudProjeto extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        requisicao = request; 
-        resposta = response;
-
         String parametro = requisicao.getParameter("param");
         
-        if(parametro.equals("destroy")){
+        int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
         
-            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
-            
-            int idProjeto = Integer.parseInt(requisicao.getParameter("id"));
-            
-            if(new ProjetoDAO().destroy(idProjeto)) {
-                
-                requisicao.setAttribute("success", "true");
-                
-            } else {
-                
-                requisicao.setAttribute("success", "false");
-                
-            }
-            
-            requisicao.setAttribute("usuarioId", usuarioId);
-            
-            this.encaminharPagina("menu.jsp");
-        }
+        int requisitoVersaoId = Integer.parseInt(requisicao.getParameter("id"));
+
+        RequisitoVersaoModel requisitoVersaoModel = new RequisitoVersaoDAO().getById(requisitoVersaoId);
+
+        ProjetoModel projetoModel = requisitoVersaoModel.getRequisito().getProjeto();
+
+        requisicao.setAttribute("usuarioId", usuarioId);
+        requisicao.setAttribute("id", projetoModel.getId());
         
-        if(parametro.equals("visualizar")){
+        if(parametro.equals("updateRequisito")){
             
-            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
-            
-            int projetoId = Integer.parseInt(requisicao.getParameter("id"));
-            
-            requisicao.setAttribute("usuarioId", usuarioId);
-            
-            requisicao.setAttribute("id", projetoId);
+            requisicao.setAttribute("requisitoId", requisitoVersaoId);
             
             this.encaminharPagina("cadastroRequisito.jsp");
             
         }
+        
+        if(parametro.equals("destroyRequisito")){
+            
+            if(new RequisitoVersaoDAO().destroy(requisitoVersaoId)){
 
+                    requisicao.setAttribute("success", "true");
+
+                }else{
+
+                    requisicao.setAttribute("success", "false");
+                }
+
+                this.encaminharPagina("cadastroRequisito.jsp");
+
+        }
+        
+        if(parametro.equals("novaVersaoRequisito")){
+            
+            requisicao.setAttribute("requisitoId", requisitoVersaoId);
+            
+            requisicao.setAttribute("isNovaVersao", "S");
+            
+            this.encaminharPagina("cadastroRequisito.jsp");
+        }
     }
 
     /**
@@ -108,39 +111,7 @@ public class crudProjeto extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        requisicao = request; 
-        resposta = response;
-
-        String parametro = request.getParameter("param");
-
-        
-        if (parametro.equals("create")) {
-            
-            String descricao = requisicao.getParameter("descricao");
-            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
-            
-            
-            UsuarioModel usuarioModel = new UsuarioDAO().getById(usuarioId);
-            
-            ProjetoModel model = new ProjetoModel();
-            model.setDescricao(descricao);
-            model.setUsuario_criacao(usuarioModel);
-            
-            requisicao.setAttribute("usuario", usuarioModel);
-            
-            if (new ProjetoDAO().save(model)) {
-                
-                requisicao.setAttribute("success", "true");
-                
-            } else {
-                
-                requisicao.setAttribute("success", "false");
-                
-            }
-            
-            encaminharPagina("menu.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -154,6 +125,7 @@ public class crudProjeto extends HttpServlet {
     }// </editor-fold>
     
     private void encaminharPagina(String pagina) {
+        
         try {
             
             RequestDispatcher rd = requisicao.getRequestDispatcher(pagina);

@@ -58,8 +58,9 @@ public class crudUsuario extends HttpServlet {
                 
         String parametro = request.getParameter("param");
         
-        int userId = Integer.parseInt(request.getParameter("userId"));
+        int usuarioId = Integer.parseInt(request.getParameter("usuarioId"));
         
+        requisicao.setAttribute("usuarioId", usuarioId);
         
         if (parametro.equals("updateUsuario")) {
             
@@ -69,7 +70,7 @@ public class crudUsuario extends HttpServlet {
             
             requisicao.setAttribute("usuario", model);
             
-            encaminharPagina("cadastroUsuario.jsp?usuarioId="+userId);
+            encaminharPagina("cadastroUsuario.jsp");
         
         
         } else if (parametro.equals("deleteUsuario")) {
@@ -84,7 +85,9 @@ public class crudUsuario extends HttpServlet {
                requisicao.setAttribute("success", "false");
            }
            
-           this.encaminharPagina("cadastroUsuario.jsp?usuarioId="+userId);
+           requisicao.setAttribute(parametro, id);
+           
+           this.encaminharPagina("cadastroUsuario.jsp");
                    
         }
     }
@@ -106,7 +109,7 @@ public class crudUsuario extends HttpServlet {
 
         String parametro = request.getParameter("param");
         
-        int userId = Integer.parseInt(request.getParameter("userId"));
+        int usuarioId = Integer.parseInt(request.getParameter("usuarioId"));
         
         if (parametro.equals("cadUsuario")) {
             
@@ -133,8 +136,10 @@ public class crudUsuario extends HttpServlet {
            } else {
                requisicao.setAttribute("success", "false");
            }
+            
+           requisicao.setAttribute("usuarioId", usuarioId);
            
-           this.encaminharPagina("cadastroUsuario.jsp?usuarioId="+userId);
+           this.encaminharPagina("cadastroUsuario.jsp");
         }
     }
 
