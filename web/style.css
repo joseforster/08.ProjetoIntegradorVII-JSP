@@ -84,7 +84,7 @@ input, h2, h3, label{
 
 table{
     border: 1px;
-    width: 70%;
+    width: 90%;
     background-color: cadetblue;
     color: white;
 }
@@ -140,7 +140,7 @@ tr{
     font-weight: bold;
 }
 
-#span-username{
+#span-name{
     float: left;
     top: 40%;
     margin-left: 2%;

@@ -30,7 +30,7 @@
         %>
         
             <div id="div-header" class="div-menu">
-                <span class="span" id="span-username">Cadastro de usuário</span>
+                <span class="span" id="span-name">Cadastro de usuário</span>
                 <br/>
                 <div class="botao-container">
                     <a href="menu.jsp?usuarioId=<%= usuarioId%>" class="botao" id="a-sair">Voltar</a>
@@ -73,7 +73,7 @@
             </div>
                     
             <% 
-                ArrayList<UsuarioModel> lista = new UsuarioDAO().getListaUsuario(); 
+                ArrayList<UsuarioModel> lista = new UsuarioDAO().getLista(); 
             %>
 
             <div class="div-menu">

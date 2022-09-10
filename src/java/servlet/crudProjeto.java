@@ -54,14 +54,15 @@ public class crudProjeto extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         requisicao = request; 
         resposta = response;
 
         String parametro = requisicao.getParameter("param");
         
-        int userId = Integer.parseInt(requisicao.getParameter("userId"));
-        
         if(parametro.equals("destroy")){
+        
+            int userId = Integer.parseInt(requisicao.getParameter("userId"));
             
             int idProjeto = Integer.parseInt(requisicao.getParameter("id"));
             
@@ -76,6 +77,19 @@ public class crudProjeto extends HttpServlet {
             }
             
             this.encaminharPagina("menu.jsp?usuarioId="+userId);
+        }
+        
+        if(parametro.equals("visualizar")){
+            
+            int userId = Integer.parseInt(requisicao.getParameter("userId"));
+            
+            int projetoId = Integer.parseInt(requisicao.getParameter("id"));
+            
+            requisicao.setAttribute("userId", userId);
+            
+            requisicao.setAttribute("id", projetoId);
+            
+            this.encaminharPagina("cadastroRequisito.jsp");
             
         }
 
@@ -113,7 +127,7 @@ public class crudProjeto extends HttpServlet {
             
             requisicao.setAttribute("usuario", usuarioModel);
             
-            if (new ProjetoDAO().create(model)) {
+            if (new ProjetoDAO().save(model)) {
                 
                 requisicao.setAttribute("success", "true");
                 

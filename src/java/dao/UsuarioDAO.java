@@ -14,7 +14,7 @@ import model.UsuarioModel;
  *
  * @author forster
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements IDAO<UsuarioModel> {
     
     public UsuarioModel getUsuario(UsuarioModel model){
         try{
@@ -87,7 +87,7 @@ public class UsuarioDAO {
     
     }
     
-    public ArrayList<UsuarioModel> getListaUsuario(){
+    public ArrayList<UsuarioModel> getLista(){
     
         ArrayList<UsuarioModel> lista = new ArrayList<>();
         

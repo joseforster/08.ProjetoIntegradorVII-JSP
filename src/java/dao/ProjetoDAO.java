@@ -15,9 +15,9 @@ import model.UsuarioModel;
  *
  * @author forster
  */
-public class ProjetoDAO {
+public class ProjetoDAO implements IDAO<ProjetoModel>{
     
-    public ArrayList<ProjetoModel> getListaProjeto(){
+    public ArrayList<ProjetoModel> getLista(){
         
         ArrayList<ProjetoModel> lista = new ArrayList<>();
         
@@ -57,7 +57,7 @@ public class ProjetoDAO {
         return lista;
     }
     
-    public boolean create(ProjetoModel model){
+    public boolean save(ProjetoModel model){
         try{
         
             Statement st = ConexaoBD.getInstance().getConnection().createStatement();     
@@ -96,5 +96,36 @@ public class ProjetoDAO {
             System.out.println("Erro ao excluir projeto: "+ e);
             return false;
         }
+    }
+
+    @Override
+    public ProjetoModel getById(int id) {
+         
+        ProjetoModel model = new ProjetoModel();
+            
+        try{
+            
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "select * from projeto_integrador_vii.projeto where id = " + id;
+            
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                
+                int projetoId = Integer.parseInt(rs.getString("id"));
+                String descricao = rs.getString("descricao");
+                
+                model.setId(projetoId);
+                model.setDescricao(descricao);
+            
+            }
+            
+        }catch(Exception e){
+            System.out.println("Erro ao buscar projeto pelo id: " + e);
+            
+        }
+        
+        return model;
     }
 }

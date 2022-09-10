@@ -30,7 +30,7 @@
             
         %>
         <div id="div-header" class="div-menu">
-            <span class="span" id="span-username">Olá, <%= model.getUsername()%> </span>
+            <span class="span" id="span-name">Olá, <%= model.getUsername()%> </span>
 
             <div class="botao-container">
                 <%
@@ -71,7 +71,7 @@
                 </tr>
                 
             <%
-                ArrayList<ProjetoModel> lista = new ProjetoDAO().getListaProjeto();
+                ArrayList<ProjetoModel> lista = new ProjetoDAO().getLista();
                 
                 for(int i = 0; i < lista.size(); i++){
             %>
@@ -80,7 +80,7 @@
                     <td><%= lista.get(i).getDescricao() %></td>
                     <td><%= lista.get(i).getUsuario_criacao().getUsername() %></td>
                     <td>
-                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=visualizar&id=<%= lista.get(i).getId() %>">Visualizar</a></button>
+                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=visualizar&id=<%= lista.get(i).getId() %>&userId=<%= model.getId() %>">Visualizar</a></button>
                         <button><a href="/ProjetoIntegradorVII/crudProjeto?param=gerarRelatorio&id=<%= lista.get(i).getId() %>">Gerar relatório</a></button>
                     </td>
                     <td>
