@@ -85,8 +85,6 @@ public class crudUsuario extends HttpServlet {
                requisicao.setAttribute("success", "false");
            }
            
-           requisicao.setAttribute(parametro, id);
-           
            this.encaminharPagina("cadastroUsuario.jsp");
                    
         }
