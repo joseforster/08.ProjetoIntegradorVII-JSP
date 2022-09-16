@@ -30,7 +30,50 @@ public class RequisitoVersaoDAO implements IDAO<RequisitoVersaoModel> {
 
     @Override
     public RequisitoVersaoModel getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        RequisitoVersaoModel requisitoVersaoModel = new RequisitoVersaoModel();
+        
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "select " +
+            " rv.id, " +
+            " rv.descricao, " +
+            " r.id as requisito_id," +
+            " r.codigo as requisito_codigo," +
+            " r.titulo as requisito_titulo " +
+            "from projeto_integrador_vii.requisito_versao as rv " +
+            "inner join projeto_integrador_vii.requisito as r on rv.requisito_id = r.id " +
+            "where rv.id = " + id;
+            
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                
+                int requisitoVersaoId = rs.getInt("id");
+                String requisitoVersaoDescricao = rs.getString("descricao");
+                int requisitoId = rs.getInt("requisito_id");
+                String requisitoCodigo = rs.getString("requisito_codigo");
+                String requisitoTitulo = rs.getString("requisito_titulo");
+            
+                requisitoVersaoModel.setId(requisitoVersaoId);
+                requisitoVersaoModel.setDescricao(requisitoVersaoDescricao);
+                
+                RequisitoModel requisitoVersao = new RequisitoModel();
+                
+                requisitoVersao.setId(requisitoId);
+                requisitoVersao.setCodigo(requisitoCodigo);
+                requisitoVersao.setTitulo(requisitoTitulo);
+                
+                requisitoVersaoModel.setRequisito(requisitoVersao);
+                
+            }
+            
+        }catch(Exception e){
+            System.out.println("Erro ao buscar requisito versão by id:" + e);
+        }
+        
+        return requisitoVersaoModel;
     }
 
     @Override
@@ -47,7 +90,7 @@ public class RequisitoVersaoDAO implements IDAO<RequisitoVersaoModel> {
             
             String sql = "select v.Id, r.codigo, r.titulo, v.versao, v.descricao from projeto_integrador_vii.requisito_versao as v " +
                         "inner join projeto_integrador_vii.requisito as r on v.requisito_id = r.id " +
-                        "where r.projeto_id = " + projetoId;
+                        "where v.ativo = 'S' and r.projeto_id = " + projetoId;
             
             ResultSet rs = st.executeQuery(sql);
             

@@ -14,26 +14,27 @@
     </head>
     <body>
          <%
+             
+            int requisitoVersaoId = Integer.parseInt(request.getParameter("requisitoVersaoId"));
+            
             int usuarioId = Integer.parseInt(request.getParameter("usuarioId"));
             
-            int projetoId = Integer.parseInt(request.getParameter("id"));
+            int projetoId = Integer.parseInt(request.getParameter("projetoId"));
             
             ProjetoModel projetoModel = new ProjetoDAO().getById(projetoId);
             
-            String idRequisito = request.getParameter("requisitoId");
-            
             RequisitoVersaoModel requisitoVersaoModel = new RequisitoVersaoModel();
             
-            if(idRequisito != null){
+            if(requisitoVersaoId > 0){
                 
-                requisitoVersaoModel = new RequisitoVersaoDAO().getById(Integer.parseInt(idRequisito));
+                requisitoVersaoModel = new RequisitoVersaoDAO().getById(requisitoVersaoId);
             }else{
                 requisitoVersaoModel.setRequisito(new RequisitoModel("", "", null));
                 requisitoVersaoModel.setDescricao("");
             
             }
             
-            String isNovaVersao = request.getParameter("isNovaVersao");
+            String isNovaVersao = (String) request.getAttribute("isNovaVersao");
         %>
         
         <div id="div-header" class="div-menu">
@@ -95,9 +96,9 @@
                         <td><%= lista.get(i).getRequisito().getTitulo() %></td>
                         <td><%= lista.get(i).getDescricao()%></td>
                         <td>
-                            <button><a href="/ProjetoIntegradorVII/crudRequisito?param=updateRequisito&id=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioId %>">Editar</a></button>&nbsp;
-                            <button><a href="/ProjetoIntegradorVII/crudRequisito?param=novaVersaoRequisito&id=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioId %>">Nova Versão</a></button>&nbsp;
-                            <button><a href="/ProjetoIntegradorVII/crudRequisito?param=destroyRequisito&id=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioId %>">Excluir</a></button>
+                            <button><a href="/ProjetoIntegradorVII/crudRequisito?param=updateRequisito&requisitoVersaoId=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioId %>&projetoId=<%= projetoId %>">Editar</a></button>&nbsp;
+                            <button><a href="/ProjetoIntegradorVII/crudRequisito?param=novaVersaoRequisito&requisitoVersaoId=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioId %>&projetoId=<%= projetoId %>">Nova Versão</a></button>&nbsp;
+                            <button><a href="/ProjetoIntegradorVII/crudRequisito?param=destroyRequisito&requisitoVersaoId=<%= lista.get(i).getId()%>&usuarioId=<%= usuarioId %>&projetoId=<%= projetoId %>">Excluir</a></button>
                         </td>
                     </tr>
                     <% 

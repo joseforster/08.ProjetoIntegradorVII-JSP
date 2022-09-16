@@ -85,11 +85,11 @@ public class crudProjeto extends HttpServlet {
             
             int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
             
-            int projetoId = Integer.parseInt(requisicao.getParameter("id"));
+            int projetoId = Integer.parseInt(requisicao.getParameter("projetoId"));
             
             requisicao.setAttribute("usuarioId", usuarioId);
             
-            requisicao.setAttribute("id", projetoId);
+            requisicao.setAttribute("projetoId", projetoId);
             
             this.encaminharPagina("cadastroRequisito.jsp");
             

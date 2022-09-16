@@ -54,22 +54,24 @@ public class crudRequisito extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        requisicao = request; 
+        resposta = response;
+        
         String parametro = requisicao.getParameter("param");
         
         int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
         
-        int requisitoVersaoId = Integer.parseInt(requisicao.getParameter("id"));
-
-        RequisitoVersaoModel requisitoVersaoModel = new RequisitoVersaoDAO().getById(requisitoVersaoId);
-
-        ProjetoModel projetoModel = requisitoVersaoModel.getRequisito().getProjeto();
+        int requisitoVersaoId = Integer.parseInt(requisicao.getParameter("requisitoVersaoId"));
+        
+        int projetoId = Integer.parseInt(requisicao.getParameter("projetoId"));
 
         requisicao.setAttribute("usuarioId", usuarioId);
-        requisicao.setAttribute("id", projetoModel.getId());
+        requisicao.setAttribute("projetoId", projetoId);
+        
         
         if(parametro.equals("updateRequisito")){
             
-            requisicao.setAttribute("requisitoId", requisitoVersaoId);
+            requisicao.setAttribute("requisitoVersaoId", requisitoVersaoId);
             
             this.encaminharPagina("cadastroRequisito.jsp");
             
@@ -77,12 +79,12 @@ public class crudRequisito extends HttpServlet {
         
         if(parametro.equals("destroyRequisito")){
             
-            if(new RequisitoVersaoDAO().destroy(requisitoVersaoId)){
-
+            if(new RequisitoVersaoDAO().destroy(requisitoVersaoId))
+                {
                     requisicao.setAttribute("success", "true");
 
-                }else{
-
+                }else
+                {
                     requisicao.setAttribute("success", "false");
                 }
 
@@ -92,7 +94,7 @@ public class crudRequisito extends HttpServlet {
         
         if(parametro.equals("novaVersaoRequisito")){
             
-            requisicao.setAttribute("requisitoId", requisitoVersaoId);
+            requisicao.setAttribute("requisitoVersaoId", requisitoVersaoId);
             
             requisicao.setAttribute("isNovaVersao", "S");
             

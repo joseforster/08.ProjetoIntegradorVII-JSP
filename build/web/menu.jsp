@@ -80,8 +80,8 @@
                     <td><%= lista.get(i).getDescricao() %></td>
                     <td><%= lista.get(i).getUsuario_criacao().getUsername() %></td>
                     <td>
-                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=visualizar&id=<%= lista.get(i).getId() %>&usuarioId=<%= model.getId() %>">Visualizar</a></button>
-                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=gerarRelatorio&id=<%= lista.get(i).getId() %>">Gerar relatório</a></button>
+                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=visualizar&projetoId=<%= lista.get(i).getId() %>&usuarioId=<%= model.getId() %>&requisitoVersaoId=0">Visualizar</a></button>
+                        <button><a href="/ProjetoIntegradorVII/crudProjeto?param=gerarRelatorio&projetoId=<%= lista.get(i).getId() %>">Gerar relatório</a></button>
                     </td>
                     <td>
                         <% if(model.getAdministrador().equals("S"))
