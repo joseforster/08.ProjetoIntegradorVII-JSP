@@ -20,7 +20,111 @@ public class RequisitoVersaoDAO implements IDAO<RequisitoVersaoModel> {
 
     @Override
     public boolean save(RequisitoVersaoModel model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        try{
+            
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql;
+            
+            // insert
+            if(model.getId() == 0){
+                 sql = "insert into projeto_integrador_vii.requisito values (default, "
+                         +"'"+model.getRequisito().getCodigo()+"',"  
+                         +"'"+model.getRequisito().getTitulo()+"',"
+                         +""+model.getRequisito().getProjeto().getId() +
+                         ") returning id;";
+                 
+                 System.out.println(sql);
+                 
+                 int requisitoId = 0;
+                         
+                 ResultSet result = st.executeQuery(sql);
+                 
+                 while(result.next()){
+                     requisitoId = result.getInt("id");
+                 }
+                 
+                 sql = "insert into projeto_integrador_vii.requisito_versao values (default, "
+                         +requisitoId+", "
+                         +"1, "
+                         +"'"+model.getDescricao()+"', default)";
+                 
+                 System.out.println(sql);
+                 
+                 st.executeUpdate(sql);
+            }
+            
+            //update
+            if(model.getId() > 0 && 
+                model.getRequisito().getCodigo() != null && 
+                model.getRequisito().getTitulo() != null)
+            {
+                
+                sql = "update projeto_integrador_vii.requisito "
+                + "set codigo = '"+model.getRequisito().getCodigo()+"', "
+                + "titulo = '"+model.getRequisito().getTitulo()+"' "
+                + "where id = "+model.getRequisito().getId();
+                
+                System.out.println(sql);
+                        
+                st.executeUpdate(sql);
+                
+                sql = "update projeto_integrador_vii.requisito_versao "
+                + "set descricao = '"+model.getDescricao()+"' "
+                + "where id = " + model.getId();
+                
+                System.out.println(sql);
+                
+                st.executeUpdate(sql);
+            }
+            
+            //nova versao
+            if(model.getId() > 0 && 
+                model.getRequisito().getCodigo() == null && 
+                model.getRequisito().getTitulo() == null && 
+                model.getDescricao() != null)
+            {
+                sql = "select id, versao from projeto_integrador_vii.requisito_versao where id in " +
+                "(select max(id) as id from projeto_integrador_vii.requisito_versao " +
+                "where requisito_id =" + model.getRequisito().getId() +" and ativo = 'S');";
+                
+                System.out.println(sql);
+                
+                ResultSet result = st.executeQuery(sql);
+                
+                int UltimaVersaoId = 0;
+                int UltimaVersaoNumero = 0;
+                
+                while(result.next()){
+                    UltimaVersaoId = result.getInt("id");
+                    UltimaVersaoNumero = result.getInt("versao");
+                }
+                
+                sql = "update projeto_integrador_vii.requisito_versao "
+                        + "set ativo = 'N' where id = " + UltimaVersaoId;
+                
+                System.out.println(sql);
+                
+                st.executeUpdate(sql);
+                
+                sql = "insert into projeto_integrador_vii.requisito_versao values (default, "
+                        + model.getRequisito().getId() + ", "
+                        + (UltimaVersaoNumero + 1) + ", " 
+                        + "'" + model.getDescricao() + "', default)";
+                
+                System.out.println(sql);
+                
+                st.executeUpdate(sql);
+                
+            }
+            
+            return true;
+            
+        }catch(Exception e ){
+            System.out.println("Erro ao salvar requisito versao: " + e);
+            return false;
+        }
     }
 
     @Override
@@ -78,7 +182,44 @@ public class RequisitoVersaoDAO implements IDAO<RequisitoVersaoModel> {
 
     @Override
     public boolean destroy(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        try{
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "select  requisito_id from projeto_integrador_vii.requisito_versao " +
+            "where id = " + id;
+            
+            System.out.println(sql);
+            
+            ResultSet result = st.executeQuery(sql);
+            
+            int requisitoId = 0;
+            
+            while(result.next()){
+                requisitoId = result.getInt("requisito_id");
+            }
+            
+            sql = "delete from projeto_integrador_vii.requisito_versao where requisito_id = "+requisitoId;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            sql = "delete from projeto_integrador_vii.requisito where id =" + requisitoId;
+            
+            System.out.println(sql);
+            
+            st.executeUpdate(sql);
+            
+            return true;
+            
+        }catch(Exception e){
+            System.out.println("Erro ao excluir requisito versao: " + e);
+            
+            return false;
+            
+        }
+        
     }
     
     public ArrayList<RequisitoVersaoModel> getListaByProjeto(int projetoId){
