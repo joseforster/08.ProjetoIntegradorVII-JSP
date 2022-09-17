@@ -4,6 +4,9 @@
  */
 package dao;
 
+import apoio.ConexaoBD;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.RequisitoModel;
 import model.RequisitoVersaoModel;
@@ -26,7 +29,36 @@ public class RequisitoDAO implements IDAO<RequisitoModel>{
 
     @Override
     public RequisitoModel getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        RequisitoModel requisitoModel = new RequisitoModel();
+        
+        try{
+            
+            Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            String sql = "select * from projeto_integrador_vii.requisito where id ="+id;
+            
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                
+                int requisitoId = rs.getInt("id");
+                
+                String codigo = rs.getString("codigo");
+                
+                String titulo = rs.getString("titulo");
+                
+                requisitoModel.setId(requisitoId);
+                requisitoModel.setCodigo(codigo);
+                requisitoModel.setTitulo(titulo);
+            }
+            
+        }catch(Exception e){
+            System.out.println("Erro ao buscar requisito by id: " + e);
+        }
+        
+        return requisitoModel;
+        
     }
 
     @Override

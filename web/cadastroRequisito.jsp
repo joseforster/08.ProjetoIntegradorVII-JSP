@@ -49,8 +49,9 @@
             
                 <form method="post" action="/ProjetoIntegradorVII/crudRequisito?param=cadRequisito&usuarioId=<%= usuarioId %>" >
 
-                    <input type="hidden" name="idRequisito" value="<%= requisitoVersaoModel.getRequisito().getId() %>"><br>
-                    <input type="hidden" name="idRequisitoVersao" value="<%= requisitoVersaoModel.getId()%>"><br>
+                    <input type="hidden" name="requisitoId" value="<%= requisitoVersaoModel.getRequisito().getId() %>"><br>
+                    <input type="hidden" name="requisitoVersaoId" value="<%= requisitoVersaoModel.getId()%>"><br>
+                    <input type="hidden" name="projetoId" value="<%= projetoId %>"><br>
                     
                     <%
                         if(isNovaVersao == null){

@@ -4,6 +4,8 @@
  */
 package servlet;
 
+import dao.ProjetoDAO;
+import dao.RequisitoDAO;
 import dao.RequisitoVersaoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.ProjetoModel;
+import model.RequisitoModel;
 import model.RequisitoVersaoModel;
 
 /**
@@ -113,7 +116,50 @@ public class crudRequisito extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        requisicao = request; 
+        resposta = response;
+        
+        String parametro = requisicao.getParameter("param");
+        
+        if(parametro.equals("cadRequisito")){
+            
+            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
+            
+            int requisitoId = Integer.parseInt(requisicao.getParameter("requisitoId"));
+            
+            int requisitoVersaoId = Integer.parseInt(requisicao.getParameter("requisitoVersaoId"));
+            
+            int projetoId = Integer.parseInt(requisicao.getParameter("projetoId"));
+            
+            String codigo = requisicao.getParameter("codigo");
+            
+            String titulo = requisicao.getParameter("titulo");
+            
+            String descricao = requisicao.getParameter("descricao");
+            
+            ProjetoModel projetoModel = new ProjetoDAO().getById(projetoId);
+            
+            RequisitoModel requisitoModel = new RequisitoModel(codigo, titulo, projetoModel);
+            
+            requisitoModel.setId(requisitoId);
+            
+            RequisitoVersaoModel requisitoVersaoModel = new RequisitoVersaoDAO().getById(requisitoVersaoId);
+            
+            requisitoVersaoModel.setId(requisitoVersaoId);
+            requisitoVersaoModel.setDescricao(descricao);
+            requisitoVersaoModel.setRequisito(requisitoModel);
+            
+            if(new RequisitoVersaoDAO().save(requisitoVersaoModel)){
+                
+                requisicao.setAttribute("success", "true");
+            }else{
+                requisicao.setAttribute("success", "false");
+            }
+            
+            this.encaminharPagina("cadastroRequisito.jsp");
+            
+        }
     }
 
     /**
