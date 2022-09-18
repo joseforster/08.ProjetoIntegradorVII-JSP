@@ -4,10 +4,13 @@
  */
 package servlet;
 
+import apoio.ConexaoBD;
 import dao.ProjetoDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.ProjetoModel;
 import model.UsuarioModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -83,15 +91,36 @@ public class crudProjeto extends HttpServlet {
         
         if(parametro.equals("visualizar")){
             
-            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
-            
             int projetoId = Integer.parseInt(requisicao.getParameter("projetoId"));
             
-            requisicao.setAttribute("usuarioId", usuarioId);
+            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
             
             requisicao.setAttribute("projetoId", projetoId);
+            requisicao.setAttribute("usuarioId", usuarioId);
             
-            this.encaminharPagina("cadastroRequisito.jsp");
+            
+            try {
+                // Compila o relatorio
+                JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorio/projeto.jrxml"));
+
+                // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+                Map parametros = new HashMap();
+                parametros.put("projetoId", projetoId);
+
+                // Executa relatoio
+                JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+                // Exibe resultado em video
+                JasperViewer.viewReport(impressao, false);
+                
+            } catch (Exception e) {
+                System.out.println("Erro ao gerar relatório: " + e);
+                
+                requisicao.setAttribute("success", "false");
+                
+            }
+            
+            this.encaminharPagina("menu.jsp");
             
         }
 
