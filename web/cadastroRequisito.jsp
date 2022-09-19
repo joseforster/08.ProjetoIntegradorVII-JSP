@@ -91,7 +91,9 @@
         %>
         
             <div class="div-menu">
-                 
+                
+                <button id="btn-historico-versoes"><a href="/ProjetoIntegradorVII/crudRequisito?param=gerarRelatorio&usuarioId=<%= usuarioId %>&projetoId=<%= projetoId %>&requisitoVersaoId=0">Relatório - Histórico de versões</a></button>
+            
                 <table>
                     <tr>
                         <th>Código</th>

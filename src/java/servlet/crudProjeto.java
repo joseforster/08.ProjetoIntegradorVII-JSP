@@ -89,15 +89,13 @@ public class crudProjeto extends HttpServlet {
             this.encaminharPagina("menu.jsp");
         }
         
-        if(parametro.equals("visualizar")){
+        if(parametro.equals("gerarRelatorio")){
             
             int projetoId = Integer.parseInt(requisicao.getParameter("projetoId"));
             
             int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
             
-            requisicao.setAttribute("projetoId", projetoId);
             requisicao.setAttribute("usuarioId", usuarioId);
-            
             
             try {
                 // Compila o relatorio
@@ -122,6 +120,18 @@ public class crudProjeto extends HttpServlet {
             
             this.encaminharPagina("menu.jsp");
             
+        }
+        
+        if(parametro.equals("visualizar")){
+            
+            int usuarioId = Integer.parseInt(requisicao.getParameter("usuarioId"));
+
+            int projetoId = Integer.parseInt(requisicao.getParameter("projetoId"));
+
+            requisicao.setAttribute("usuarioId", usuarioId);
+            requisicao.setAttribute("projetoId", projetoId);
+            
+            this.encaminharPagina("cadastroRequisito.jsp");
         }
 
     }

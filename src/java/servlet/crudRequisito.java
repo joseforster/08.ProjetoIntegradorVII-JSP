@@ -4,11 +4,14 @@
  */
 package servlet;
 
+import apoio.ConexaoBD;
 import dao.ProjetoDAO;
 import dao.RequisitoDAO;
 import dao.RequisitoVersaoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import model.ProjetoModel;
 import model.RequisitoModel;
 import model.RequisitoVersaoModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -102,6 +110,34 @@ public class crudRequisito extends HttpServlet {
             requisicao.setAttribute("isNovaVersao", "S");
             
             this.encaminharPagina("cadastroRequisito.jsp");
+        }
+        
+        
+        if(parametro.equals("gerarRelatorio")){
+            
+            try {
+                // Compila o relatorio
+                JasperReport relatorio = JasperCompileManager.compileReport(getClass().getResourceAsStream("/relatorio/requisito_historico.jrxml"));
+
+                // Mapeia campos de parametros para o relatorio, mesmo que nao existam
+                Map parametros = new HashMap();
+                parametros.put("projetoId", projetoId);
+
+                // Executa relatoio
+                JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoBD.getInstance().getConnection());
+
+                // Exibe resultado em video
+                JasperViewer.viewReport(impressao, false);
+                
+            } catch (Exception e) {
+                System.out.println("Erro ao gerar relatório: " + e);
+                
+                requisicao.setAttribute("success", "false");
+                
+            }
+            
+            this.encaminharPagina("cadastroRequisito.jsp");
+            
         }
     }
 

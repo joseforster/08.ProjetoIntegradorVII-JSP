@@ -4,8 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VII/Parte%20III/ProjetoIntegradorVII/web/style.css</file>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VII/Parte%20III/ProjetoIntegradorVII/src/java/dao/ProjetoDAO.java</file>
-            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VII/Parte%20III/ProjetoIntegradorVII/web/cadastroUsuario.jsp</file>
+            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VII/Parte%20III/ProjetoIntegradorVII/src/java/servlet/crudRequisito.java</file>
+            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VII/Parte%20III/ProjetoIntegradorVII/web/cadastroRequisito.jsp</file>
+            <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VII/Parte%20III/ProjetoIntegradorVII/src/java/servlet/crudProjeto.java</file>
             <file>file:/home/forster/Documents/Univates/Projeto%20Integrador%20VII/Parte%20III/ProjetoIntegradorVII/web/menu.jsp</file>
         </group>
     </open-files>

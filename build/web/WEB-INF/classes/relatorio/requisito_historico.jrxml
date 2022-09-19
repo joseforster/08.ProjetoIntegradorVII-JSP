@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="requisito_historico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="429061ce-07ef-4b3e-b7df-cbf16ff9da3d">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[cHJvamV0b19pbnRlZ3JhZG9yX3ZpaS5wcm9qZXRvIEFTICwxNSw0MywxZDExOTAyYi0yZDY5LTRi
+ZWYtYjBhYS1hMTllZGJkOWJmZTI7cHJvamV0b19pbnRlZ3JhZG9yX3ZpaS5yZXF1aXNpdG8gQVMg
+LDE3MCwyOSxkNmE1N2JmNy1lMGUyLTRjMzItYWM1Ni1mMzhiMDZkZmZmMjE7cHJvamV0b19pbnRl
+Z3JhZG9yX3ZpaS5yZXF1aXNpdG9fdmVyc2FvIEFTICwzMjYsMTUsMjA0OWFhZDUtZjFlZC00NGMw
+LTlmZTgtZmE5MmFhZTI1ZmZkOw==]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="projeto_integrador_vii"/>
+	<parameter name="projetoId" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT p.descricao AS projeto,
+	r.codigo,
+	r.titulo,
+	rv.descricao,
+	rv.versao,
+	rv.ativo
+FROM projeto_integrador_vii.projeto AS p
+	inner join projeto_integrador_vii.requisito AS r ON 
+	 p.id = r.projeto_id 
+	inner join projeto_integrador_vii.requisito_versao AS rv ON 
+	 r.id = rv.requisito_id 
+WHERE 
+	 p.id = $P{projetoId} 
+ORDER BY r.codigo DESC,
+	rv.versao DESC]]>
+	</queryString>
+	<field name="projeto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="projeto"/>
+		<property name="com.jaspersoft.studio.field.label" value="projeto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="projeto"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="requisito"/>
+	</field>
+	<field name="titulo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.label" value="titulo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="requisito"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="requisito_versao"/>
+	</field>
+	<field name="versao" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="versao"/>
+		<property name="com.jaspersoft.studio.field.label" value="versao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="requisito_versao"/>
+	</field>
+	<field name="ativo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ativo"/>
+		<property name="com.jaspersoft.studio.field.label" value="ativo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="requisito_versao"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField evaluationTime="Auto">
+				<reportElement x="80" y="10" width="400" height="60" uuid="5982e2aa-13cf-45be-b815-4a49b7000a4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{projeto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="80" height="30" uuid="a095e49c-3dc8-467b-9a61-b8821f77d58f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="10" width="130" height="30" uuid="0869409c-060f-401d-984e-d60fad805188"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Título]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="10" width="215" height="30" uuid="adf061fc-c3b6-4a35-bce6-f10bf1d51926"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="10" width="75" height="30" uuid="4c4a1150-0b7d-43a4-919e-aeeb175ffa1b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Versão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="10" width="75" height="30" uuid="4c41151c-3eb1-4371-a08e-f6838ce78b7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Ativo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="80" height="30" uuid="ed1e2b95-c9c0-4892-b747-ce691b9d8ca4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="10" width="130" height="30" uuid="5d96cfd7-0274-40e7-86bd-66b7524bb4d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="10" width="215" height="30" uuid="e2c6a650-2566-475e-b746-68f55649beb6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="10" width="75" height="30" uuid="0cd11d7f-ce28-485b-b3e7-262b23ec45fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{versao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="10" width="75" height="30" uuid="cff65e43-cd0a-4d17-ac04-ffab2ef2666f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ativo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
