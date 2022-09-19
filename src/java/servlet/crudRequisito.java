@@ -189,11 +189,12 @@ public class crudRequisito extends HttpServlet {
             if(new RequisitoVersaoDAO().save(requisitoVersaoModel)){
                 
                 requisicao.setAttribute("success", "true");
+                
             }else{
                 requisicao.setAttribute("success", "false");
             }
             
-            this.encaminharPagina("cadastroRequisito.jsp");
+            this.encaminharPagina("cadastroRequisito.jsp?requisitoVersaoId=0");
             
         }
     }
